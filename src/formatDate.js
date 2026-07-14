@@ -17,7 +17,7 @@ function formatDate(date, fromFormat, toFormat) {
     parts[fromFormat[i]] = arrDate[i];
   }
 
-  for (let j = 0; j < arrDate.length; j++) {
+  for (let j = 0; j < toFormat.length - 1; j++) {
     if (
       (fromFormat.includes('YYYY') && toFormat[j] === 'YY') ||
       (fromFormat.includes('YY') && toFormat[j] === 'YYYY')
@@ -35,6 +35,10 @@ function formatDate(date, fromFormat, toFormat) {
 }
 
 function normalizeYear(obj, targetYearFormat) {
+  if (targetYearFormat !== 'YY' && targetYearFormat !== 'YYYY') {
+    throw new Error('Unsupported year format');
+  }
+
   if (targetYearFormat === 'YYYY') {
     return obj.YY >= 30 ? '19' + obj.YY : '20' + obj.YY;
   }
